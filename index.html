@@ -1,4 +1,4 @@
-index.html - Kearney's Fantasy Baseball League 2026 (Production Release)
+index.html - Kearney's Fantasy Baseball League 2026 (Final Production)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +52,7 @@ index.html - Kearney's Fantasy Baseball League 2026 (Production Release)
             background: rgba(255, 255, 255, 0.05);
             border: 2px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            padding: 20px;
+            padding: 16px;
             font-size: 16px;
             font-weight: 700;
             width: 100%;
@@ -78,6 +78,7 @@ index.html - Kearney's Fantasy Baseball League 2026 (Production Release)
         }
 
         .btn-primary:active { transform: scale(0.98); background: #a00b34; }
+        .btn-primary:disabled { opacity: 0.3; pointer-events: none; }
 
 
         .bottom-nav {
@@ -152,116 +153,116 @@ index.html - Kearney's Fantasy Baseball League 2026 (Production Release)
 </head>
 <body>
 
-    <!-- Gameday Ticker: Friday, March 6, 2026, 1:08 PM EST -->
+    <!-- Gameday Ticker: Friday, March 6, 2026, 1:28 PM EST -->
     <div class="bg-black text-[12px] font-black uppercase overflow-hidden whitespace-nowrap h-12 flex items-center border-b border-white/10 z-50 shadow-2xl">
         <div class="animate-ticker flex gap-16 px-8 items-center">
             <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span> [WBC FINAL] MAR 6, 2026: JAPAN 13, TPE 0</span>
-            <span class="text-red-500">SHOHEI OHTANI: 117.1 MPH EXIT VELOCITY GRAND SLAM • WBC RECORD 5 RBI</span>
+            <span class="text-red-500">SHOHEI OHTANI: 117.1 MPH EV GRAND SLAM (+2 PARITY BONUS)</span>
             <span class="text-blue-400">[WBC LIVE] CUBA 3 - PANAMA 0 (BOT 4TH) • MONCADA 2-RUN HR</span>
-            <span>[SPRING TRAINING] 1:08 PM ET: BOS @ DET (1ST INN) • PHI @ PIT (1ST INN)</span>
+            <span>[SPRING TRAINING] 1:28 PM ET: BOS @ DET (BOT 1ST) • PHI @ PIT (BOT 1ST)</span>
 
-            <span class="text-emerald-400">[SECURITY] ACCESS GRANTED: CHRIS KEARNEY COMMISSIONER OVERRIDE ACTIVE</span>
+            <span class="text-emerald-400">[SYSTEM] KEARNEY'S LEAGUE: ONBOARDING ACTIVE • 30-MAN PROTOCOL</span>
         </div>
     </div>
 
     <!-- MAIN CONTAINER -->
     <main class="px-6 mt-8 max-w-lg mx-auto">
         
-        <!-- SPLASH PAGE -->
+        
         <section id="splash-section" class="space-y-8 text-center py-10">
             <div class="splash-card">
-                <div class="text-[10px] font-black text-red-600 uppercase tracking-[0.4em] mb-4">Official 2026 Gameday Hub</div>
+                <div class="text-[10px] font-black text-red-600 uppercase tracking-[0.4em] mb-4">Official 2026 Launch Protocol</div>
                 <h1 class="header-font text-5xl font-black italic mlb-gradient-text uppercase leading-none text-white">Kearney's<br>Fantasy Baseball</h1>
-                <div class="mt-4 text-[10px] text-slate-400 font-bold uppercase tracking-widest">Friday, March 6 • 1:08 PM EST</div>
+                <div class="mt-4 text-[10px] text-slate-400 font-bold uppercase tracking-widest">Friday, March 6 • 1:28 PM EST</div>
             </div>
 
-            <div class="bento-card">
-                <h3 class="header-font text-sm uppercase text-slate-500 tracking-widest mb-6">Identity Check</h3>
-                <input type="text" id="user-name-input" placeholder="Enter Full Name" class="manager-input mb-4">
-                <button onclick="loginUser()" class="btn-primary">Access Hub</button>
+            <div id="login-container" class="bento-card">
+                <h3 id="login-step-title" class="header-font text-sm uppercase text-slate-500 tracking-widest mb-6">Identity Check</h3>
+                <div id="login-inputs" class="space-y-4">
+                    <input type="text" id="user-name-input" placeholder="Full Manager Name" class="manager-input">
 
-            </div>
-        </section>
-
-        <!-- SETUP -->
-        <section id="setup-section" class="py-12 hidden">
-            <div class="bento-card">
-                <h2 class="header-font text-3xl mb-4 uppercase italic font-black text-white">League Launch</h2>
-                <div class="mb-6">
-                    <label class="text-[8px] font-black text-slate-400 uppercase tracking-widest block mb-2">Salary Cap ($)</label>
-                    <input id="setup-cap" type="number" value="260" class="manager-input !text-left !py-3 border-emerald-500/30 !text-emerald-500">
+                    <input type="text" id="team-name-input" placeholder="Desired Team Name" class="manager-input hidden">
+                    <button id="login-btn" onclick="handleLogin()" class="btn-primary">Continue</button>
                 </div>
-                <div id="setup-form" class="space-y-4 mb-8"></div>
-                <button onclick="initLeague()" class="btn-primary">Initialize 30-Man Draft</button>
+                <div id="league-wait-msg" class="mt-6 text-[10px] text-slate-500 font-bold uppercase hidden">
+                    Awaiting all 3 teams to be named...
+                </div>
             </div>
         </section>
 
-        <!-- DASHBOARD (Roster Page) -->
+        <!-- DASHBOARD (Roster Hub) -->
         <section id="dashboard-section" class="hidden space-y-5 pb-10">
-            <header class="mb-6">
-
-                <button onclick="logout()" class="text-[9px] font-black text-slate-500 uppercase mb-2 flex items-center gap-2"><span>←</span> Exit Portal</button>
-                <h1 id="dash-title" class="header-font text-3xl font-black italic mlb-gradient-text uppercase">Roster Card</h1>
+            <header class="flex justify-between items-center mb-6">
+                <h1 id="dash-title" class="header-font text-3xl font-black italic mlb-gradient-text uppercase">Roster Hub</h1>
+                <button onclick="logout()" class="text-[9px] font-black text-slate-500 uppercase px-3 py-1 bg-white/5 rounded-lg">Log Out</button>
             </header>
             <div id="dash-summary" class="bento-card"></div>
+            <div id="waiting-start-notice" class="bento-card bg-blue-900/10 border-blue-500/30 text-center hidden">
+                <div class="text-[10px] font-black uppercase text-blue-400">Draft Finalized</div>
+                <div class="header-font text-lg uppercase mt-1">Awaiting Commissioner Confirmation</div>
+
+            </div>
             <div class="bento-card p-4">
-                <h3 class="header-font text-sm uppercase text-slate-500 mb-4 tracking-widest">30-Man Roster Depth</h3>
+                <h3 class="header-font text-sm uppercase text-slate-500 mb-4 tracking-widest">30-Man Roster Card</h3>
                 <table class="box-table">
-                    <thead><tr><th>Pos</th><th>Player</th><th>Status</th><th>Value</th></tr></thead>
+                    <thead><tr><th>Pos</th><th>Player</th><th>Status</th><th>Pts</th></tr></thead>
                     <tbody id="lineup-table-body"></tbody>
                 </table>
             </div>
         </section>
 
-        <!-- GAMEDAY -->
+        <!-- GAMEDAY HUB -->
         <section id="gameday-section" class="hidden space-y-6 pb-12">
             <div class="overflow-x-auto pb-4 no-scrollbar">
                 <div id="scorebug-container" class="flex gap-3"></div>
             </div>
             <div class="bento-card">
-
-                <h2 class="header-font text-2xl font-black uppercase italic mlb-gradient-text mb-6">Live Game Hub</h2>
+                <h2 class="header-font text-2xl font-black uppercase italic mlb-gradient-text mb-6">Live Game Center</h2>
                 <div id="statcast-standouts" class="mb-8 space-y-4"></div>
                 <div id="gameday-lineups-list" class="space-y-8"></div>
+
             </div>
         </section>
 
         <!-- STANDINGS -->
         <section id="standings-section" class="hidden space-y-4 pb-12">
-            <h2 class="header-font text-2xl font-black italic uppercase mlb-gradient-text">2026 League Power Rankings</h2>
+            <h2 class="header-font text-2xl font-black italic uppercase mlb-gradient-text">2026 Rankings</h2>
             <div id="standings-list" class="space-y-3"></div>
         </section>
 
-        <!-- ADMIN (Chris Kearney Only) -->
-        <section id="commish-section" class="hidden space-y-6 pb-12">
-            <div class="bento-card border-red-900/50">
-                <h3 class="header-font text-lg uppercase italic text-red-500 mb-6">Commissioner Suite</h3>
-                <div class="mb-6 border-b border-white/5 pb-6">
-                    <label class="text-[8px] font-black text-slate-400 uppercase tracking-widest block mb-2">Adjust Salary Cap ($)</label>
-                    <input id="edit-cap" type="number" class="manager-input !text-left !py-3 border-emerald-500/30 !text-emerald-500">
-
-                </div>
-                <div id="commish-edit-fields" class="space-y-4 mb-6"></div>
-                <button onclick="saveLeagueInfo()" class="btn-primary !bg-emerald-600 mb-6">Sync Changes</button>
-                <div class="space-y-3 pt-6 border-t border-white/5">
-                    <button onclick="simulateDay()" class="w-full bg-white/10 py-3 rounded-xl font-black uppercase text-[10px]">Advance Day Simulation</button>
-                    <button onclick="confirmFullReset()" class="w-full bg-red-900/20 text-red-500 py-3 rounded-xl font-black uppercase text-[10px]">Permanent Season Reset</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- DRAFT -->
+        <!-- DRAFT ROOM -->
         <section id="draft-section" class="hidden pb-12">
             <div class="bento-card mb-6 border-blue-900/30">
                 <div id="draft-team-name" class="header-font text-2xl font-black italic uppercase text-white mb-2">Draft Room</div>
                 <div id="draft-stats-bar" class="flex justify-between items-center pt-4 border-t border-white/10"></div>
             </div>
-            <div class="mb-6">
-                <div class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-3">Filter by MLB Team</div>
-                <div id="team-filter-grid" class="flex gap-2 overflow-x-auto pb-4 no-scrollbar"></div>
-
+            <div id="commish-finalize-btn" class="mb-6 hidden">
+                <button onclick="finalizeSeason()" class="w-full bg-emerald-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest shadow-xl">Start 2026 Season</button>
             </div>
-            <div class="space-y-3" id="draft-list"></div>
+            <div id="draft-ui-content">
+
+                <div class="mb-6">
+                    <div id="team-filter-grid" class="flex gap-2 overflow-x-auto pb-4 no-scrollbar"></div>
+                </div>
+                <div class="space-y-3" id="draft-list"></div>
+            </div>
+        </section>
+
+        <!-- ADMIN (Commissioner Access) -->
+        <section id="commish-section" class="hidden space-y-6 pb-12">
+            <div class="bento-card border-red-900/50">
+                <h3 class="header-font text-lg uppercase italic text-red-500 mb-6">Commissioner Admin</h3>
+                <div class="space-y-4">
+                    <div class="bg-white/5 p-4 rounded-xl">
+                        <label class="text-[8px] font-black text-slate-400 uppercase tracking-widest block mb-2">Salary Cap ($)</label>
+                        <input id="admin-edit-cap" type="number" value="260" class="manager-input !text-left !py-3 border-emerald-500/30 !text-emerald-500">
+                    </div>
+                    <button onclick="saveAdminSettings()" class="w-full bg-emerald-600 py-3 rounded-xl font-black uppercase text-[10px]">Sync Financials</button>
+                    <button onclick="simulateDay()" class="w-full bg-white/10 py-3 rounded-xl font-black uppercase text-[10px]">Generate Results</button>
+                    <button onclick="confirmFullReset()" class="w-full bg-red-900/20 text-red-500 py-3 rounded-xl font-black uppercase text-[10px]">Hard System Reset</button>
+
+                </div>
+            </div>
         </section>
     </main>
 
@@ -275,211 +276,203 @@ index.html - Kearney's Fantasy Baseball League 2026 (Production Release)
     </nav>
 
     <script>
-        const STORAGE_KEY = 'mlb_kearney_vFinal_2026_Production';
+        const STORAGE_KEY = 'mlb_kearney_production_v1_Final';
         
         // Elite 2026 Player Pool
         const PLAYER_POOL = [
 
-            { id: 1, name: "Shohei Ohtani", mlb: "LAD", pos: "DH", ev: '117.1', value: 84, season: "2025: 55 HR, 1.014 OPS | WBC: Record Grand Slam", game: 'FINAL', isBarrel: true },
-            { id: 2, name: "Aaron Judge", mlb: "NYY", pos: "OF", ev: '114.5', value: 67, season: "2025: .331 AVG, 53 HR | 1.144 OPS", game: '1:08P', isBarrel: true },
-            { id: 3, name: "Bobby Witt Jr.", mlb: "KC", pos: "SS", ev: '108.9', value: 56, season: "2025: 184 H, 7.1 WAR | Elite Speed", game: '8:05P', isBarrel: false },
-            { id: 4, name: "Paul Skenes", mlb: "PIT", pos: "SP", ev: '0.0', value: 43, season: "2025: 1.97 ERA, 216 K | 0.95 WHIP", game: '1:08P' },
-            { id: 5, name: "Tarik Skubal", mlb: "DET", pos: "SP", ev: '0.0', value: 38, season: "2025: 2.39 ERA, 228 K | Cy Young", game: '1:08P' },
-            { id: 6, name: "Elly De La Cruz", mlb: "CIN", pos: "SS", ev: '110.2', value: 38, season: "2025: 25 HR, 67 SB | Power/Speed", game: '1:08P', isBarrel: true },
-            { id: 7, name: "Juan Soto", mlb: "NYM", pos: "OF", ev: '112.3', value: 53, season: "2025: .288 AVG, 41 HR | .419 OBP", game: '7:00P', isBarrel: true },
-            { id: 8, name: "Ronald Acuña Jr.", mlb: "ATL", pos: "OF", ev: '111.4', value: 46, season: "2025: Recovery | Elite Ceiling", game: '1:08P', isBarrel: true },
-            { id: 9, name: "Gunnar Henderson", mlb: "BAL", pos: "SS", ev: '109.1', value: 37, season: "2025: 37 HR | 118 R", game: '1:08P', isBarrel: true },
-            { id: 10, name: "Corbin Carroll", mlb: "ARI", pos: "OF", ev: '103.2', value: 36, season: "2025: 22 HR, 35 SB | 110 R", game: '1:08P', isBarrel: false }
+            { id: 1, name: "Shohei Ohtani", mlb: "LAD", pos: "DH", ev: '117.1', value: 84, season: "2025: 55 HR, 1.014 OPS | WBC Champ", game: 'FINAL', isBarrel: true },
+            { id: 2, name: "Aaron Judge", mlb: "NYY", pos: "OF", ev: '114.5', value: 67, season: "2025: 53 HR | 1.144 OPS", game: 'LIVE', isBarrel: true },
+            { id: 3, name: "Bobby Witt Jr.", mlb: "KC", pos: "SS", ev: '108.9', value: 56, season: "2025: 184 H, 7.1 WAR", game: '8:05P', isBarrel: false },
+            { id: 4, name: "Paul Skenes", mlb: "PIT", pos: "SP", ev: '0.0', value: 43, season: "2025: 1.97 ERA, 216 K", game: 'LIVE' },
+            { id: 5, name: "Tarik Skubal", mlb: "DET", pos: "SP", ev: '0.0', value: 38, season: "2025: 2.39 ERA | Cy Young", game: 'LIVE' },
+            { id: 6, name: "Elly De La Cruz", mlb: "CIN", pos: "SS", ev: '110.2', value: 38, season: "2025: 25 HR, 67 SB", game: 'LIVE', isBarrel: true },
+            { id: 7, name: "Juan Soto", mlb: "NYM", pos: "OF", ev: '112.3', value: 53, season: "2025: .419 OBP, 41 HR", game: '7:00P', isBarrel: true }
         ];
 
-        // Roster Seeding for 30-Man Depth
-        const mlbTeamsList = ["LAD","NYY","KC","PIT","DET","CIN","NYM","ARI","ATL","BAL","SEA","TOR","BOS","TB","TEX","MIN","SF","PHI","MIL","WSH","LAA","CHC","HOU","SD","CLE","MIA","COL","STL","CWS","ATH"];
-        for(let i=11; i<=180; i++) {
-            PLAYER_POOL.push({
-                id: i, name: `2026 Star ${i}`, mlb: mlbTeamsList[i % mlbTeamsList.length], pos: "UTIL", ev: '99.1', value: 1, 
-                season: "2026 Deep Roster Benchmark", game: '1:08P', isBarrel: false
-            });
-
+        const mlbTeamsList = ["LAD","NYY","KC","PIT","DET","CIN","NYM","ATL","BAL","SEA","BOS","TEX","HOU","PHI","MIN","ARI","SD","MIL","TOR","TB","SF","STL","CWS","CLE","COL","MIA","LAA","WSH","ATH"];
+        for(let i=8; i<=180; i++) {
+            PLAYER_POOL.push({ id: i, name: `2026 Prospect ${i}`, mlb: mlbTeamsList[i % mlbTeamsList.length], pos: "UTIL", ev: '98.5', value: 1, season: "30-Man Roster Depth", game: 'LIVE' });
         }
 
-        const REAL_SCORES = [
+        const LIVE_SCORES = [
             { away: "TPE", awayS: 0, home: "JPN", homeS: 13, status: "FINAL (WBC)" },
             { away: "CUB", awayS: 3, home: "PAN", homeS: 0, status: "BOT 4TH (WBC)" },
             { away: "BOS", awayS: 0, home: "DET", homeS: 0, status: "1ST INN" },
             { away: "PHI", awayS: 0, home: "PIT", homeS: 0, status: "1ST INN" }
+
         ];
 
         let state = {
             teams: [], currentPick: 0, isDraftFinished: false,
-            activeTeamIdx: -1, currentUser: null, salaryCap: 260,
-            freeAgents: [...PLAYER_POOL], isSeasonStarted: false,
-            draftOrder: [], filterTeam: 'ALL'
+            isSeasonConfirmed: false, activeTeamIdx: -1, currentUser: null,
+            salaryCap: 260, freeAgents: [...PLAYER_POOL], draftOrder: [],
+            tempManagerName: null, filterTeam: 'ALL'
         };
 
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) state = JSON.parse(saved);
 
-
         window.onload = () => { 
-            if (state.currentUser) loginUser(state.currentUser);
+            if (state.currentUser) syncAppView();
             else showSection('splash');
         };
 
         function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 
-        function loginUser(name = null) {
-            const input = name || document.getElementById('user-name-input').value.trim();
-            if (!input) return;
-            const isAdmin = input.toLowerCase() === "chris kearney";
-            
-            if (state.teams.length === 0) {
-                if (isAdmin) { 
-                    state.currentUser = "Chris Kearney"; save(); 
-                    renderSetupForm(); showSection('setup'); 
-                } else alert("League awaiting initialization by Chris Kearney.");
+
+        function handleLogin() {
+            const nameInput = document.getElementById('user-name-input');
+            const teamInput = document.getElementById('team-name-input');
+            const stepTitle = document.getElementById('login-step-title');
+
+            if (!state.tempManagerName) {
+                const name = nameInput.value.trim();
+                if (!name) return;
+                state.tempManagerName = name;
+                nameInput.classList.add('hidden');
+                teamInput.classList.remove('hidden');
+                stepTitle.innerText = "Team Branding";
                 return;
             }
 
+            const teamName = teamInput.value.trim();
+            if (!teamName) return;
 
-            const idx = state.teams.findIndex(t => t.mgr.toLowerCase() === input.toLowerCase());
-            if (idx !== -1 || isAdmin) {
-                state.currentUser = input; state.activeTeamIdx = idx === -1 ? 0 : idx; save();
-                document.getElementById('app-nav').classList.remove('hidden');
-                document.querySelectorAll('.nav-item').forEach(i => i.style.display = 'flex');
-                document.getElementById('nav-commish').style.display = isAdmin ? 'flex' : 'none';
-                document.getElementById('nav-draft').style.display = state.isDraftFinished ? 'none' : 'flex';
-                showSection('dashboard');
-            } else alert("Identity not recognized.");
+            let idx = state.teams.findIndex(t => t.mgr.toLowerCase() === state.tempManagerName.toLowerCase());
+
+            if (idx === -1 && state.teams.length < 3) {
+                state.teams.push({ mgr: state.tempManagerName, name: teamName, roster: [], points: 0, daily: 0 });
+                idx = state.teams.length - 1;
+                if (state.teams.length === 3) state.draftOrder = [0, 1, 2].sort(() => Math.random() - 0.5);
+            }
+            
+            state.currentUser = state.tempManagerName;
+            state.activeTeamIdx = idx;
+            state.tempManagerName = null;
+            save();
+            syncAppView();
         }
 
-        function logout() { state.currentUser = null; save(); location.reload(); }
+        function syncAppView() {
+            const isReady = state.teams.length === 3;
+            if (isReady) {
+                document.getElementById('app-nav').classList.remove('hidden');
+                const isAdmin = state.currentUser.toLowerCase() === "chris kearney";
+                document.querySelectorAll('.nav-item').forEach(i => i.style.display = 'flex');
+
+                document.getElementById('nav-commish').style.display = isAdmin ? 'flex' : 'none';
+                document.getElementById('nav-draft').style.display = state.isSeasonConfirmed ? 'none' : 'flex';
+                showSection('dashboard');
+            } else {
+                document.getElementById('user-name-input').value = "";
+                document.getElementById('team-name-input').value = "";
+                document.getElementById('team-name-input').classList.add('hidden');
+                document.getElementById('user-name-input').classList.remove('hidden');
+                document.getElementById('login-step-title').innerText = "Identity Check";
+                document.getElementById('league-wait-msg').classList.remove('hidden');
+                document.getElementById('league-wait-msg').innerText = `Rosters Joined: ${state.teams.length} / 3`;
+            }
+        }
 
         function showSection(id) {
             document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
             document.getElementById(id + '-section').classList.remove('hidden');
             document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
             const n = document.getElementById('nav-' + id);
+
             if (n) n.classList.add('active');
-
-
             if (id === 'dashboard') renderDashboard();
             if (id === 'gameday') renderGameday();
             if (id === 'draft') renderDraft();
             if (id === 'standings') renderStandings();
-            if (id === 'commish') renderCommishEdit();
         }
 
         function renderDashboard() {
             const t = state.teams[state.activeTeamIdx];
             if (!t) return;
-            const spent = t.roster.reduce((sum, p) => sum + p.value, 0);
             document.getElementById('dash-summary').innerHTML = `<div class="p-6">
-                <div class="text-[9px] font-black text-red-500 uppercase mb-1">Manager: ${t.mgr}</div>
+                <div class="text-[9px] font-black text-red-500 uppercase mb-1">${t.mgr} Portal</div>
                 <h2 class="header-font text-4xl font-black uppercase italic leading-none">${t.name}</h2>
                 <div class="flex justify-between items-center mt-4">
-                    <div class="text-[8px] font-black text-slate-500 uppercase">Cap Spent: $${spent} / $${state.salaryCap}</div>
+                    <div class="text-[8px] font-black text-slate-500 uppercase">Season Total: ${t.points} Pts</div>
                     <div class="text-xl font-black text-emerald-500">+${t.daily}</div>
                 </div>
             </div>`;
+            document.getElementById('waiting-start-notice').style.display = (state.isDraftFinished && !state.isSeasonConfirmed) ? 'block' : 'none';
 
             document.getElementById('lineup-table-body').innerHTML = t.roster.map((p, i) => `
                 <tr><td class="font-black text-slate-600">${i < 23 ? 'ACT' : 'BN'}</td>
-                <td><div class="font-black uppercase text-[10px]">${p.name} ${p.isBarrel ? '🔥' : ''}</div><span class="player-stat-label">${p.mlb} • ${p.season}</span></td>
+                <td><div class="font-black uppercase text-[10px]">${p.name}</div><span class="player-stat-label">${p.mlb} • ${p.season}</span></td>
                 <td><span class="badge ${p.game === 'FINAL' ? 'badge-blue' : 'badge-green'}">${p.game}</span></td>
-                <td class="font-black text-emerald-500">$${p.value}</td></tr>`).join('');
+                <td class="font-black text-emerald-500">${(Math.random()*4).toFixed(1)}</td></tr>`).join('');
         }
 
         function renderGameday() {
-            document.getElementById('scorebug-container').innerHTML = REAL_SCORES.map(s => `<div class="scorebug-item"><div class="scorebug-team"><span class="scorebug-name">${s.away}</span><span class="scorebug-score">${s.awayS}</span></div><div class="scorebug-team"><span class="scorebug-name">${s.home}</span><span class="scorebug-score">${s.homeS}</span></div><div class="scorebug-status">${s.status}</div></div>`).join('');
+            document.getElementById('scorebug-container').innerHTML = LIVE_SCORES.map(s => `<div class="scorebug-item"><div class="scorebug-team"><span class="scorebug-name">${s.away}</span><span class="scorebug-score">${s.awayS}</span></div><div class="scorebug-team"><span class="scorebug-name">${s.home}</span><span class="scorebug-score">${s.homeS}</span></div><div class="scorebug-status">${s.status}</div></div>`).join('');
             const top = state.teams.flatMap(t => t.roster).sort((a,b) => parseFloat(b.ev) - parseFloat(a.ev)).slice(0, 3);
-            document.getElementById('statcast-standouts').innerHTML = `<div class="text-[10px] font-black uppercase text-blue-500 mb-3">Statcast Performance Hub</div>` + top.map(p => `<div class="bg-white/5 p-4 rounded-2xl flex justify-between"><div><div class="font-black uppercase">${p.name}</div><span class="player-stat-label">${p.mlb} • ${p.season}</span></div><div class="text-xl font-black text-blue-400">${p.ev} MPH</div></div>`).join('');
+            document.getElementById('statcast-standouts').innerHTML = `<div class="text-[10px] font-black uppercase text-blue-500 mb-3">Statcast Leaderboard</div>` + top.map(p => `<div class="bg-white/5 p-4 rounded-2xl flex justify-between"><div><div class="font-black uppercase">${p.name}</div><span class="player-stat-label">${p.mlb} • EV: ${p.ev} MPH</span></div><div class="text-xl font-black text-blue-400">+2.0</div></div>`).join('');
             document.getElementById('gameday-lineups-list').innerHTML = state.teams.map(t => `<div class="p-6 bg-white/2 rounded-3xl border border-white/5"><h4 class="header-font text-xl uppercase mb-4">${t.name} (Live: +${t.daily})</h4><div class="space-y-2">${t.roster.slice(0, 5).map(p => `<div class="bg-white/2 p-2 rounded-lg flex justify-between"><span class="text-[10px] font-black uppercase">${p.name}</span><span class="text-[10px] text-blue-400 font-black">${p.ev} EV</span></div>`).join('')}</div></div>`).join('');
         }
 
         function renderDraft() {
+            if (state.isDraftFinished) {
+                document.getElementById('draft-ui-content').classList.add('hidden');
+                const isAdmin = state.currentUser.toLowerCase() === "chris kearney";
+                document.getElementById('commish-finalize-btn').style.display = (isAdmin && !state.isSeasonConfirmed) ? 'block' : 'none';
+
+                return;
+            }
             const tIdx = state.draftOrder[state.currentPick % state.teams.length];
             const team = state.teams[tIdx];
-            const rem = state.salaryCap - team.roster.reduce((sum, p) => sum + p.value, 0);
-            
-
+            const spent = team.roster.reduce((sum, p) => sum + p.value, 0);
             document.getElementById('draft-team-name').innerText = `Clock: ${team.name}`;
-            document.getElementById('draft-stats-bar').innerHTML = `<div><div class="text-[8px] uppercase">Cap $${state.salaryCap}</div></div><div><div class="text-[8px] uppercase">Manager Funds: $${rem}</div></div>`;
-            
+            document.getElementById('draft-stats-bar').innerHTML = `<div><div class="text-[8px] uppercase">Cap $${state.salaryCap}</div></div><div><div class="text-[8px] uppercase">Remaining: $${state.salaryCap - spent}</div></div>`;
             document.getElementById('team-filter-grid').innerHTML = ['ALL', ...mlbTeamsList].map(tm => `<div onclick="setFilter('${tm}')" class="team-pill ${state.filterTeam === tm ? 'active' : ''}">${tm}</div>`).join('');
-
             const filtered = state.freeAgents.filter(p => state.filterTeam === 'ALL' || p.mlb === state.filterTeam);
             document.getElementById('draft-list').innerHTML = filtered.slice(0, 20).map(p => `
                 <div class="bento-card flex justify-between items-center py-4">
                     <div><div class="font-black text-xs uppercase">${p.name} (${p.mlb})</div><span class="player-stat-label">${p.season}</span><div class="text-[8px] font-black text-emerald-500 mt-1">$${p.value}</div></div>
-                    <button onclick="pick(${p.id})" class="bg-white text-black px-4 py-2 rounded-xl text-[9px] font-black uppercase ${p.value > rem ? 'opacity-30 pointer-events-none' : ''}">Select</button>
+                    <button onclick="pick(${p.id})" class="bg-white text-black px-4 py-2 rounded-xl text-[9px] font-black uppercase ${(p.value > (state.salaryCap - spent)) ? 'opacity-30 pointer-events-none' : ''}">Draft</button>
                 </div>`).join('');
         }
 
         function setFilter(tm) { state.filterTeam = tm; save(); renderDraft(); }
 
         function pick(id) {
+
             const tIdx = state.draftOrder[state.currentPick % state.teams.length];
             const p = state.freeAgents.find(x => x.id === id);
             state.teams[tIdx].roster.push(p);
-
             state.freeAgents = state.freeAgents.filter(x => x.id !== id);
             state.currentPick++;
             if (state.currentPick >= 90) state.isDraftFinished = true;
-            save(); 
-            if (!state.isDraftFinished) renderDraft(); else showSection('splash');
+            save(); renderDraft();
         }
+
+        function finalizeSeason() {
+            state.isSeasonConfirmed = true;
+            save(); syncAppView();
+        }
+
+        function saveAdminSettings() {
+            state.salaryCap = parseInt(document.getElementById('admin-edit-cap').value) || 260;
+            save(); alert("Financials Synced.");
+        }
+
 
         function renderStandings() {
             const sorted = [...state.teams].sort((a,b) => b.points - a.points);
             document.getElementById('standings-list').innerHTML = sorted.map((t, i) => `<div class="bento-card flex justify-between items-center"><div class="flex gap-4 items-center"><span class="header-font text-2xl text-slate-800">0${i+1}</span><div><div class="font-black uppercase">${t.name}</div><div class="text-[8px] text-slate-500">${t.mgr}</div></div></div><div class="text-2xl font-black">${t.points}</div></div>`).join('');
         }
 
-        function renderSetupForm() {
-            document.getElementById('setup-form').innerHTML = [1, 2, 3].map(i => `<div class="grid grid-cols-2 gap-2"><input id="setup-mgr-${i}" type="text" placeholder="Manager ${i}" class="manager-input !py-3 !text-sm"><input id="setup-team-${i}" type="text" placeholder="Team ${i}" class="manager-input !py-3 !text-sm"></div>`).join('');
-        }
-
-        function initLeague() {
-            state.salaryCap = parseInt(document.getElementById('setup-cap').value) || 260;
-            state.teams = [1, 2, 3].map(i => ({ mgr: document.getElementById(`setup-mgr-${i}`).value || `Mgr ${i}`, name: document.getElementById(`setup-team-${i}`).value || `Team ${i}`, roster: [], points: 0, daily: 0 }));
-
-            state.draftOrder = [0, 1, 2].sort(() => Math.random() - 0.5);
-            save(); loginUser("Chris Kearney");
-        }
-
         function renderCommishEdit() {
-            document.getElementById('edit-cap').value = state.salaryCap;
-            document.getElementById('commish-edit-fields').innerHTML = state.teams.map((t, i) => `<div class="grid grid-cols-2 gap-2"><input id="edit-mgr-${i}" type="text" value="${t.mgr}" class="manager-input !py-3 !text-sm"><input id="edit-team-${i}" type="text" value="${t.name}" class="manager-input !py-3 !text-sm"></div>`).join('');
+            document.getElementById('admin-edit-cap').value = state.salaryCap;
         }
 
-        function saveLeagueInfo() {
-            state.salaryCap = parseInt(document.getElementById('edit-cap').value) || 260;
-            state.teams.forEach((t, i) => { t.mgr = document.getElementById(`edit-mgr-${i}`).value; t.name = document.getElementById(`edit-team-${i}`).value; });
-            save(); alert("League Settings Synchronized.");
-        }
-
-        function simulateDay() {
-            state.teams.forEach(t => { const d = Math.floor(Math.random()*45); t.daily = d; t.points += d; });
-            save(); showSection('gameday');
-        }
-
-
-        function runTest() {
-            state.teams = [
-                { mgr: "Chris Kearney", name: "Kearney Kings", roster: PLAYER_POOL.slice(0, 30), points: 50, daily: 14 },
-                { mgr: "Friend A", name: "Statcast Legends", roster: PLAYER_POOL.slice(30, 60), points: 42, daily: 9 },
-                { mgr: "Friend B", name: "30-Man Titans", roster: PLAYER_POOL.slice(60, 90), points: 35, daily: 6 }
-            ];
-            state.isDraftFinished = true; state.isSeasonStarted = true;
-            save(); loginUser("Chris Kearney");
-        }
-
-        function confirmFullReset() {
-            if (confirm("DANGER: Wiping all 2026 data. Re-deployment requires fresh setup. Proceed?")) {
-                localStorage.clear(); sessionStorage.clear();
-                location.href = location.pathname;
-                location.reload();
-            }
-        }
+        function logout() { state.currentUser = null; save(); location.reload(); }
+        function simulateDay() { state.teams.forEach(t => { const d = Math.floor(Math.random()*45); t.daily = d; t.points += d; }); save(); showSection('gameday'); }
+        function confirmFullReset() { if (confirm("DANGER: Wiping all 2026 data and sessions. Re-deployment requires fresh setup. Proceed?")) { localStorage.clear(); sessionStorage.clear(); location.reload(); } }
     </script>
 </body>
 </html>
